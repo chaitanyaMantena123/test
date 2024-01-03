@@ -1,0 +1,34 @@
+provider "ibm" {
+  // Your IBM Cloud credentials or API key configuration goes here
+}
+
+resource "ibm_schematics_workspace" "example_workspace" {
+  name        = "example-workspace"
+  description = "Example Schematics workspace"
+  location    = "us-south"  // Your desired region
+
+  // Specify the Git repository settings
+  repository {
+    repo_url        = "https://github.com/yourusername/your-terraform-repo.git"  // Replace with your Git repo URL
+    repo_token      = "your-github-token"  // Replace with your Git token
+    repo_branch     = "main"  // Replace with your desired branch
+    repo_directory  = "/"  // Path to your Terraform configurations within the repository
+  }
+
+  // Specify the Terraform configuration settings
+  terraform {
+    version = ">= 0.12"
+  }
+
+  // Optional: Variables that can be used in your Terraform configurations
+  variable {
+    name         = "example_variable"
+    description  = "Example variable"
+    type         = "string"
+    default      = "example-value"
+  }
+}
+
+output "workspace_id" {
+  value = ibm_schematics_workspace.example_workspace.id
+}
